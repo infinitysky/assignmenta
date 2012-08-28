@@ -101,15 +101,18 @@ $year[$i] = mysql_result($result_years, [$i]);
 
 
 
-	for($i = 0; $l < mysql_num_fields($result_years); $i++){
-		echo "<option value = '$option[$i]'>$option[$i]</option>";
+	for($i = 0; $i <count($year); $i++){
+		
+		//echo "<option value = '$option[$i]'>$option[$i]</option>";
+		echo "<option value = '$year[$i]~$year[$count]'>$year[$i]~$year[$count]</option>";
+}
+
 	}
 }
 echo "</select>";
 echo "<br />";
 echo "<br />";
 echo "<br />";
-
 
 
 
