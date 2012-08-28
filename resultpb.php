@@ -20,10 +20,10 @@
 	
 	
 	function display($dbcon, $query){
-	$result_page = mysql_query($query, $connection);
+	$result_page = mysql_query($query, $dbcon);
 	$rowfound = mysql_num_rows($result_page);
 	echo $rowfound." results found";
-	echo "<table width='90%'>";
+	
 	echo "<tr><th align='left'>Name</th>
       	<th align='left'>Variety</th>
 	  	<th align='left'>Year</th>
@@ -34,7 +34,18 @@
 	  	<th align='left'>Price</th>
 	  	<th align='left'>Quantity</th>
 	  	<th align='left'>Revenue</th></tr>";
-
+	while($result = mysql_fetch_row($result_page)){
+	echo "<tr><td width='10%'>$result[0]</td>
+	      <td width='10%'>$result[1]</td>
+		  <td width='10%'>$result[2]</td>
+		  <td width='20%'>$result[3]</td>
+		  <td width='15%'>$result[4]</td>
+		  <td width='10%'>$result[5]</td>
+		  <td width='10%'>$result[6]</td>
+		  <td width='10%'>$result[7]</td>
+		  <td width='10%'>$result[8]</td>
+		  <td>$result[9]</td></tr>";
+	}
 	
 	
 	

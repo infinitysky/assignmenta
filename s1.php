@@ -81,7 +81,7 @@ echo "<br />";
 
 
 $query_grape = "select region_name from grape ";
-$result_prege = mysql_query($query_grape, $dbcon);
+$result_grape = mysql_query($query_grape, $dbcon);
 echo "Select a grape variety";
 echo "<select name = 'grape' id  = 'grape'>";
 while ($option = mysql_fetch_row($result_grape)){
@@ -133,12 +133,12 @@ echo "<br />";
 <br />
 <br />
 <br />
-<span>Enter a minimum cost:</span>
+<span>Enter minimum cost:</span>
 <input type = "text" name = "mincost" id ="mincost" value = 0 />
 <br />
 <br />
 <br />
-<span>Enter a maximum cost:</span>
+<span>Enter maximum cost:</span>
 <input type= "text" name = "maxcost" id="maxcost" value = 0 />
 <br />
 <br />
