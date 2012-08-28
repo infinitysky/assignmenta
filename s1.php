@@ -65,22 +65,43 @@ die('Can not accesse '.mysqlerror());
 mysql_select_db("winestore", $dbcon);
 
 
-$query = "select region_name from region ";
-$result = mysql_query($query, $dbcon);
-
+$query_region = "select region_name from region ";
+$result_region = mysql_query($query_region, $dbcon);
 echo "Select a region ";
 echo "<select name = 'region' id  = 'region'>";
-while ($option = mysql_fetch_row($result)){
-	for($j = 0; $j < mysql_num_fields($result); $j++){
+while ($option = mysql_fetch_row($result_region)){
+	for($j = 0; $j < mysql_num_fields($result_region); $j++){
 		echo "<option value = '$option[$i]'>$option[$i]</option>";
 	}
 }
 echo "</select>";
 echo "<br />";
 echo "<br />";
+echo "<br />";
 
+echo "Select a grape variety";
+echo "<select name = 'grape' id  = 'grape'>";
+while ($option = mysql_fetch_row($result$result_grape)){
+	for($j = 0; $k < mysql_num_fields($result_grape); $k++){
+		echo "<option value = '$option[$i]'>$option[$i]</option>";
+	}
+}
+echo "</select>";
+echo "<br />";
+echo "<br />";
+echo "<br />";
 
-
+echo "Select years";
+echo "<select name = 'year' id  = 'year'>";
+while ($option = mysql_fetch_row($result$result_grape)){
+	for($l = 0; $l < mysql_num_fields($result_grape); $l++){
+		echo "<option value = '$option[$i]'>$option[$i]</option>";
+	}
+}
+echo "</select>";
+echo "<br />";
+echo "<br />";
+echo "<br />";
 
 
 
