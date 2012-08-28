@@ -97,10 +97,73 @@
 $query .= " order by wine.wine_name";
 $resultcheck= mysql_query($query, $dbcon);
 $resultcheckpage = mysql_fetch_row($resultcheck);
-if(empty($resultcheckpage[0]) || !is_numeric($_GET['minstock']) || !is_numeric($_GET['minorder']) || !is_numeric($_GET['mincost'])|| !is_numeric($_GET['maxcost'])){
+//if(empty($resultcheckpage[0]) || !is_numeric($_GET['minstock']) || !is_numeric($_GET['minorder']) || !is_numeric($_GET['mincost'])|| !is_numeric($_GET['maxcost'])){
+i
+f(empty($resultcheckpage[0]) || !is_numeric($_GET['minstock']) || !is_numeric($_GET['minorder']) || !is_numeric($_GET['mincost'])|| !is_numeric($_GET['maxcost'])){
 echo "No result found";
-}else
-display($dbcon, $query);	
+
+}
+else{
+
+
+
+define("USER_HOME_DIR", "/home/stud/s3240514");
+require(USER_HOME_DIR . "/php/Smarty-2.6.26/Smarty.class.php");
+
+
+$smarty = new Smarty();
+
+$smarty->template_dir = USER_HOME_DIR . "/php/Smarty-Work-Dir/templates";
+$smarty->compile_dir = USER_HOME_DIR . "/php/Smarty-Work-Dir/templates_c";
+$smarty->cache_dir = USER_HOME_DIR . "/php/Smarty-Work-Dir/cache";
+$smarty->config_dir = USER_HOME_DIR . "/php/Smarty-Work-Dir/configs";
+
+$smarty->assign('result', 'Result Page');
+$smarty->assign('Name', 'Name');
+$smarty->assign('Variety', 'Variety');
+$smarty->assign('Year', 'Year');
+$smarty->assign('Winery', 'Winery');
+$smarty->assign('Region', 'Region');
+$smarty->assign('Cost', 'Cost');
+$smarty->assign('Stock', 'Stock');
+$smarty->assign('Price', 'Price');
+$smarty->assign('Quantity', 'Quantity');
+$smarty->assign('Revenue', 'Revenue');
+
+
+
+
+while($result = mysql_fetch_assoc($resultcheck)){
+$namearray[] = $result["winename"];
+$variety[] = $result["variety"];
+$year[] = $result["year"];
+$winery[] = $result["wineryname"];
+$region[] = $result["regionname"];
+$cost[] = $result["cost"];
+$instock[] = $result["instock"];
+$price[] = $result["price"];
+$quantity[] = $result["quantity"];
+$revenue[] = $result["revenue"];
+
+}
+
+
+for($i=0; $i<mysql_num_rows($resultcheck); $i++){
+$smarty->assign('result_name',$namearray);
+$smarty->assign('result_variety', $variety);
+$smarty->assign('result_year', $year);
+$smarty->assign('result_winery', $winery);
+$smarty->assign('result_region', $region);
+$smarty->assign('result_cost', $cost);
+$smarty->assign('result_stock', $onhand);
+$smarty->assign('result_price', $price);
+$smarty->assign('result_quantity', $quantity);
+$smarty->assign('result_revenue', $revenue);
+}
+$smarty->display('partc.tpl');
+}
+
+
 	
 	
 	function display($dbcon, $query){

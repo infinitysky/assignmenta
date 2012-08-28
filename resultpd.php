@@ -8,14 +8,11 @@
 </head>
 <body>
 <?php
-	require_once('db.php');
-	if(!mysql_connect(DB_HOST, DB_USER, DB_PW)){
-	echo "unable connect to database";
-	}
-	else{
-	$dbcon = mysql_connect(DB_HOST, DB_USER, DB_PW);
-	mysql_select_db('winestore', $dbcon);
-	}
+
+require_once('pdodb.php');
+$pdo = new PDO("mysql:host=".DB_HOST.";port=".DB_PORT.";dbname=".DB_NAME,DB_USER,DB_PW);  
+	
+
 	
 	$query = "Select wine.wine_name, grape_variety.variety, wine.year, winery.winery_name, region.region_name, inventory.cost, inventory.on_hand, items.price, items.qty, items.qty*items.price-inventory.cost*items.qty
           From wine, grape_variety, winery, region, inventory, items, wine_variety
