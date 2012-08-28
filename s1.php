@@ -37,7 +37,7 @@ mysql_close($dbcon);
 <br />
 
 <span>Please Enter wine name:</span>
-<input type = "text" name = "winename" id = "winename" value = "All"/>
+<input type = "text" name = "winename" id = "winename" />
 <br />
 <br />
 <br />
