@@ -26,14 +26,7 @@
 			And wine.wine_id = wine_variety.wine_id
 			And grape_variety.variety_id = wine_variety.variety_id";
 	
-	$query_region="Select wine.wine_name, grape_variety.variety, wine.year, winery.winery_name, region.region_name, inventory.cost, inventory.on_hand, items.price, items.qty, items.qty*items.price-inventory.cost*items.qty
-          From wine, grape_variety, winery, region, inventory, items, wine_variety
-		  Where wine.winery_id = winery.winery_id
-		    And winery.region_id = region.region_id
-			And inventory.wine_id = wine.wine_id
-			And wine.wine_id = items.wine_id
-			And wine.wine_id = wine_variety.wine_id
-			And grape_variety.variety_id = wine_variety.variety_id";
+	
 	
 	
 	
@@ -73,37 +66,65 @@
 		$query .= " And year between $minyear and $maxyear";
 	}
 
-	$minstock = intval($_GET['minStock']);
+	$minstock = intval($_GET['minstock']);
 	
 	if($minstock != 0){
 		$query .= " AND inventory.on_hand >= $minstock";
 	}
 	
-	$minorder = intval($_GET['minOrder']);
+	$minorder = intval($_GET['minorder']);
 	
 	if($minorder != 0){
 		$query .= " AND items.qty >= $minorder";
 	}
 	
-	$mincost = intval($_GET['minCost']);
+	$mincost = intval($_GET['mincost']);
 	
-	$maxcost = intval($_GET['maxCost']);
-	
+	$maxcost = intval($_GET['maxcost']);
+	/*
 	if(!empty($mincost) && !empty($maxcost) && $mincost < $maxcost){
 		$query .= " AND inventory.cost BETWEEN '$mincost' AND '$maxcost'";
+	
 	} 
-    
+	*/
+	$query .= " And (inventory.cost between '$minCost' and '$maxCost')";
+	
+
+
+/*
 	$query .= " order by wine.wine_name";
-	display($dbcon, $query);
-	
-	
+	$resultcheck = mysql_query($query, $dbcon);
+	$outputpage== mysql_fetch_row($resultcheck);
+if(empty($outputpage[0]) || !is_numeric($_GET['minstock']) || !is_numeric($_GET['minorder']) || !is_numeric($_GET['mincost'])|| !is_numeric($_GET['maxcost'])){
+echo "No result found";
+}else
+display($dbcon, $query);
+
+
+
+	$query .= " order by wine.wine_name";
+$check_result = mysql_query($query, $dbcon);
+$check_result_page = mysql_fetch_row($check_result);
+if(empty($check_result_page[0])|| !is_numeric($_GET['minorder'])  || !is_numeric($_GET['minstock']) || !is_numeric($_GET['mincost'])|| !is_numeric($_GET['maxcost'])){
+echo "No result found";
+}else
+display($dbcon, $query);
+*/
+
+$query .= " order by wine.wine_name";
+$check_result = mysql_query($query, $dbcon);
+$check_result_page = mysql_fetch_row($check_result);
+if(empty($check_result_page[0]) || !is_numeric($_GET['minstock']) || !is_numeric($_GET['minorder']) || !is_numeric($_GET['mincost'])|| !is_numeric($_GET['maxcost'])){
+echo "No result found";
+}else
+display($dbcon, $query);	
 	
 	
 	function display($dbcon, $query){
 		$result_page = mysql_query($query, $dbcon);
 		$rowfound = mysql_num_rows($result_page);
 		echo $rowfound." results found";
-		echo "<table width='90%'>";
+		echo "<table width='80%'>";
 		echo "<tr><th align='left'>Name</th>
       			<th align='left'>Variety</th>
 	  			<th align='left'>Year</th>
