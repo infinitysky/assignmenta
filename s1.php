@@ -4,10 +4,10 @@
 
 <head>
 <meta http-equiv="content-type" content="text/html;charset=utf-8" />
-<title>Search Page</title>
+<title>Search Page Part B</title>
 </head>
 
-<body bgcolor = "white">
+<body>
 <form action = "resultpb.php" method = "GET">
 
 
@@ -28,6 +28,17 @@ mysql_select_db("winestore", $dbcon);
 
 $query = "select region_name from region ";
 $result = mysql_query($query, $dbcon);
+
+echo "Select a region ";
+echo "<select name = 'region' id  = 'region'>";
+while ($option = mysql_fetch_row($result)){
+	for($j = 0; $j < mysql_num_fields($result); $j++){
+		echo "<option value = '$option[$i]'>$option[$i]</option>";
+}
+
+
+
+
 ?>
 
 
