@@ -79,6 +79,9 @@ echo "<br />";
 echo "<br />";
 echo "<br />";
 
+
+$query_grape = "select region_name from grape ";
+$result_prege = mysql_query($query_grape, $dbcon);
 echo "Select a grape variety";
 echo "<select name = 'grape' id  = 'grape'>";
 while ($option = mysql_fetch_row($result_grape)){
@@ -95,9 +98,10 @@ echo "Select years";
 echo "<select name = 'years' id  = 'years'>";
 
 
-
+$query_years = "select region_name from grape ";
+$result_years = mysql_query($query_years, $dbcon);
 while ($option = mysql_fetch_row($result_years)){
-$year[$i] = mysql_result($result_years, [$i]);
+	$year[$i] = mysql_result($result_years, $i);
 
 
 
@@ -105,9 +109,9 @@ $year[$i] = mysql_result($result_years, [$i]);
 		
 		//echo "<option value = '$option[$i]'>$option[$i]</option>";
 		echo "<option value = '$year[$i]~$year[$count]'>$year[$i]~$year[$count]</option>";
-}
-
 	}
+
+	
 }
 echo "</select>";
 echo "<br />";
@@ -119,7 +123,26 @@ echo "<br />";
 
 ?>
 
-
+<span>Minimum number of wines in stock</span>
+<input type = "text" name = "minstock" id = "minstock" value = 0 />
+<br />
+<br />
+<br />
+<span>Minimum number of wines ordered</span>
+<input type = "text" name = "minorder" id = "minorder" value = 0 />
+<br />
+<br />
+<br />
+<span>Enter a minimum cost:</span>
+<input type = "text" name = "mincost" id ="mincost" value = 0 />
+<br />
+<br />
+<br />
+<span>Enter a maximum cost:</span>
+<input type= "text" name = "maxcost" id="maxcost" value = 0 />
+<br />
+<br />
+<br />
 
 <input type = "submit" name = "submit" id = "submit" value = "Search" />
 
