@@ -94,12 +94,6 @@ echo "<br />";
 echo "Select years";
 echo "<select name = 'years' id  = 'years'>";
 
-$year[$i] = mysql_result($result_years,$i);
-}
-for($i = 0; $i <count($year); $i+=5){
-$count = $i + 4;
-echo "<option value = '$year[$i]~$year[$count]'>$year[$i]~$year[$count]</option>";
-}
 
 
 while ($option = mysql_fetch_row($result_years)){
