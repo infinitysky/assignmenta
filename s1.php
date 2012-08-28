@@ -67,6 +67,9 @@ while ($option = mysql_fetch_row($result)){
 		echo "<option value = '$option[$i]'>$option[$i]</option>";
 	}
 }
+echo "</select>";
+echo "<br />";
+echo "<br />";
 
 ?>
 
