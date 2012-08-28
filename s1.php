@@ -36,11 +36,19 @@ mysql_close($dbcon);
 <br />
 <br />
 
+<span>Please Enter wine name:</span>
+<input type = "text" name = "winename" id = "winename" value = "All"/>
+<br />
+<br />
+<br />
+<br />
+
 <span>Enter winery name:</span>
 <input type = "text" name = "wineryname" id = "wineryname" />
 <br />
 <br />
-<input type = "submit" name = "submit" id = "submit" value = "Search" />
+
+
 
 <?php
 require_once('db.php');
@@ -71,16 +79,24 @@ echo "</select>";
 echo "<br />";
 echo "<br />";
 
+
+
+
+
+
+
+
 ?>
 
 
 
-<span>Please Enter wine name:</span>
-<input type = "text" name = "winename" id = "winename" value = "All"/>
+<input type = "submit" name = "submit" id = "submit" value = "Search" />
+
+
 <br />
 <br />
-<br />
-<br />
+
+
 
 </form>
 </body>
