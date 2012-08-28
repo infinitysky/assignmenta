@@ -25,7 +25,7 @@ die('Can not accesse '.mysqlerror());
 echo 'Connected to mysql on ' . DB_HOST . "\n";
 mysql_select_db("winestore", $dbcon);
 
-mysql_close($dbcon);
+//mysql_close($dbcon);
 ?>
 
 
@@ -36,7 +36,7 @@ mysql_close($dbcon);
 <br />
 <br />
 <li>
-<span>Please Enter wine name:</span>
+<span>Please Enter wine name:</span></t>
 <input type = "text" name = "winename" id = "winename" />
 <br />
 <br />
@@ -115,19 +115,51 @@ while ($option = mysql_fetch_row($result_grape)){
 <select name = 'years' id  = 'years'>
 
 <?php
+/*
+require_once('db.php');
+mysql_connect(DB_HOST, DB_USER, DB_PW);
+$dbcon = mysql_connect(DB_HOST, DB_USER, DB_PW);
+
+if(!$dbcon)
+{
+//echo 'Could not connect to mysql on ' . DB_HOST . "\n";
+//exit;
+die('Can not accesse '.mysqlerror());
+}
+echo 'Connected to mysql on ' . DB_HOST . "\n";
+mysql_select_db("winestore", $dbcon);
+
+mysql_close($dbcon);
+*/
+
+
+
+
+
 $query_years = "select distinct year from wine order by year asc;";
 $result_years = mysql_query($query_years, $dbcon);
+/*
 while ($option = mysql_fetch_row($result_years)){
+
 	$years[$i] = mysql_result($result_years, $i);
 
-	for($i = 0; $i <count($year); $i++){
-		
+		for($i = 0; $i <count($year); $i+=5){
+		$count = $i + 4;
 		//echo "<option value = '$option[$i]'>$option[$i]</option>";
 		echo "<option value = '$years[$i]~$years[$count]'>$years[$i]~$years[$count]</option>";
-	}
-
-	
+		}
+*/
+for($i = 0; i < mysql_fetch_row($result_year); $i++){
+	$year[$i] = mysql_result($result_year,$i);
 }
+
+for($i = 0; $i <count($year); $i+=5){
+$count = $i + 4;
+echo "<option value = '$year[$i]~$year[$count]'>$year[$i]~$year[$count]</option>";
+}
+	
+
+
 ?>
 </li>
 </select>
