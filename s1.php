@@ -25,6 +25,37 @@ die('Can not accesse '.mysqlerror());
 echo 'Connected to mysql on ' . DB_HOST . "\n";
 mysql_select_db("winestore", $dbcon);
 
+mysql_close($dbcon);
+?>
+
+
+
+
+
+<br />
+<br />
+<br />
+
+<span>Enter winery name:</span>
+<input type = "text" name = "wineryname" id = "wineryname" />
+<br />
+<br />
+<input type = "submit" name = "submit" id = "submit" value = "Search" />
+
+<?php
+require_once('db.php');
+mysql_connect(DB_HOST, DB_USER, DB_PW);
+$dbcon = mysql_connect(DB_HOST, DB_USER, DB_PW);
+
+if(!$dbcon)
+{
+//echo 'Could not connect to mysql on ' . DB_HOST . "\n";
+//exit;
+die('Can not accesse '.mysqlerror());
+}
+//echo 'Connected to mysql on ' . DB_HOST . "\n";
+mysql_select_db("winestore", $dbcon);
+
 
 $query = "select region_name from region ";
 $result = mysql_query($query, $dbcon);
@@ -37,28 +68,16 @@ while ($option = mysql_fetch_row($result)){
 	}
 }
 
-
-
 ?>
 
 
 
-
-
-<br />
-<br />
-<br />
 <span>Please Enter wine name:</span>
 <input type = "text" name = "winename" id = "winename" value = "All"/>
 <br />
 <br />
 <br />
 <br />
-<span>Enter winery name:</span>
-<input type = "text" name = "wineryname" id = "wineryname" />
-<br />
-<br />
-<input type = "submit" name = "submit" id = "submit" value = "Search" />
 
 </form>
 </body>
