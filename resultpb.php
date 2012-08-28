@@ -7,6 +7,18 @@
   <title>Result Page</title>
 </head>
 <body>
+<?php
+	require_once('db.php');
+	if(!mysql_connect(DB_HOST, DB_USER, DB_PW)){
+	echo "Can't connect to database";
+	}
+	else{
+	$dbcon = mysql_connect(DB_HOST, DB_USER, DB_PW);
+	mysql_select_db('winestore', $dbcon);
+	}
+	
+?>
+
 	
 </body>
 </html>
