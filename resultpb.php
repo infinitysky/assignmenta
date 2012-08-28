@@ -36,6 +36,69 @@
 			And grape_variety.variety_id = wine_variety.variety_id";
 	
 	
+	
+		
+	$winename = $_GET['winename'];
+	
+	if(!empty($winename) && $winename != "All"){			
+		$query .= " And wine_name LIKE '%$winename%'";
+	}
+
+	$wineryname = $_GET['wineryname'];
+	
+	if(!empty($wineryname) && $wineryname != "All"){
+		$query .= " And winery_name LIKE '%$wineryname%'";
+	}
+
+	$region = $_GET['region'];
+	
+	if(!empty($regionname) && $region != "All"){
+		$query .= " And region_name = '$regionname'";
+	}
+
+	$grape = $_GET['grape'];
+		if(!empty($grape)){
+		$query .= " And variety = '$grape'";
+	}
+
+	$year = $_GET['year'];
+	
+	$years = explode("~", $year);
+	
+	$maxyear = intval($years[1]);
+	
+	$minyear = intval($years[0]);
+	
+	if(!empty($minyear) && !empty($maxyear)){
+		$query .= " And year between $minyear and $maxyear";
+	}
+
+	$minstock = intval($_GET['minStock']);
+	
+	if($minstock != 0){
+		$query .= " AND inventory.on_hand >= $minstock";
+	}
+	
+	$minorder = intval($_GET['minOrder']);
+	
+	if($minorder != 0){
+		$query .= " AND items.qty >= $minorder";
+	}
+	
+	$mincost = intval($_GET['minCost']);
+	
+	$maxcost = intval($_GET['maxCost']);
+	
+	if(!empty($mincost) && !empty($maxcost) && $mincost < $maxcost){
+		$query .= " AND inventory.cost BETWEEN '$mincost' AND '$maxcost'";
+	} 
+    
+	$query .= " order by wine.wine_name";
+	display($dbcon, $query);
+	
+	
+	
+	
 	function display($dbcon, $query){
 		$result_page = mysql_query($query, $dbcon);
 		$rowfound = mysql_num_rows($result_page);
@@ -62,10 +125,11 @@
 		  				<td width='10%'>$result[7]</td>
 		  				<td width='10%'>$result[8]</td>
 		  				<td>$result[9]</td></tr>";
-		}
+			}
 	
 	
-}
+	}
+	
 	
 ?>
 

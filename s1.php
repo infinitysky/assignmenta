@@ -110,55 +110,19 @@ while ($option = mysql_fetch_row($result_grape)){
 
 
 
-
 <li>Please Select years
-<select name = 'years' id  = 'years'>
-
+<select name = 'year' id  = 'year'>
 <?php
-/*
-require_once('db.php');
-mysql_connect(DB_HOST, DB_USER, DB_PW);
-$dbcon = mysql_connect(DB_HOST, DB_USER, DB_PW);
+$query_year = "select distinct year from wine order by year asc;";
+$result_year = mysql_query($query_year, $dbcon);
 
-if(!$dbcon)
-{
-//echo 'Could not connect to mysql on ' . DB_HOST . "\n";
-//exit;
-die('Can not accesse '.mysqlerror());
+for($k = 0; k < mysql_fetch_row($result_year); $k++){
+$year[$k] = mysql_result($result_year,$k);
 }
-echo 'Connected to mysql on ' . DB_HOST . "\n";
-mysql_select_db("winestore", $dbcon);
-
-mysql_close($dbcon);
-*/
-
-
-
-
-
-$query_years = "select distinct year from wine order by year asc;";
-$result_years = mysql_query($query_years, $dbcon);
-/*
-while ($option = mysql_fetch_row($result_years)){
-
-	$years[$i] = mysql_result($result_years, $i);
-
-		for($i = 0; $i <count($year); $i+=5){
-		$count = $i + 4;
-		//echo "<option value = '$option[$i]'>$option[$i]</option>";
-		echo "<option value = '$years[$i]~$years[$count]'>$years[$i]~$years[$count]</option>";
-		}
-*/
-for($i = 0; i < mysql_fetch_row($result_year); $i++){
-	$year[$i] = mysql_result($result_year,$i);
+for($k = 0; $k <count($year); $k+=5){
+$count = $k + 4;
+echo "<option value = '$year[$k]~$year[$count]'>$year[$k]~$year[$count]</option>";
 }
-
-for($i = 0; $i <count($year); $i+=5){
-$count = $i + 4;
-echo "<option value = '$year[$i]~$year[$count]'>$year[$i]~$year[$count]</option>";
-}
-	
-
 
 ?>
 </li>
