@@ -81,7 +81,7 @@ echo "<br />";
 
 echo "Select a grape variety";
 echo "<select name = 'grape' id  = 'grape'>";
-while ($option = mysql_fetch_row($result$result_grape)){
+while ($option = mysql_fetch_row($result_grape)){
 	for($j = 0; $k < mysql_num_fields($result_grape); $k++){
 		echo "<option value = '$option[$i]'>$option[$i]</option>";
 	}
@@ -92,9 +92,9 @@ echo "<br />";
 echo "<br />";
 
 echo "Select years";
-echo "<select name = 'year' id  = 'year'>";
-while ($option = mysql_fetch_row($result$result_grape)){
-	for($l = 0; $l < mysql_num_fields($result_grape); $l++){
+echo "<select name = 'years' id  = 'years'>";
+while ($option = mysql_fetch_row($result_years)){
+	for($l = 0; $l < mysql_num_fields($result_years); $l++){
 		echo "<option value = '$option[$i]'>$option[$i]</option>";
 	}
 }
