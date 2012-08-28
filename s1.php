@@ -34,8 +34,8 @@ echo "<select name = 'region' id  = 'region'>";
 while ($option = mysql_fetch_row($result)){
 	for($j = 0; $j < mysql_num_fields($result); $j++){
 		echo "<option value = '$option[$i]'>$option[$i]</option>";
+	}
 }
-
 
 
 
