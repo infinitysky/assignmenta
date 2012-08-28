@@ -8,7 +8,7 @@
 </head>
 
 <body>
-<form action = "resultpb.php" method = "GET">
+<form action = "resultpd.php" method = "GET">
 
 
 <?php
