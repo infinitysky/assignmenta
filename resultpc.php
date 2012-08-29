@@ -17,7 +17,7 @@
 	mysql_select_db('winestore', $dbcon);
 	}
 	
-	$query = "Select wine.wine_name, grape_variety.variety, wine.year, winery.winery_name, region.region_name, inventory.cost, inventory.on_hand, items.price, items.qty, items.qty*items.price-inventory.cost*items.qty as revenue 
+	$query = "Select wine.wine_name, grape_variety.variety, wine.year, winery.winery_name, region.region_name, inventory.cost, inventory.on_hand, items.price, items.qty, items.qty*items.price-inventory.cost*items.qty as rev
           From wine, grape_variety, winery, region, inventory, items, wine_variety
 		  Where wine.winery_id = winery.winery_id
 		    And winery.region_id = region.region_id
@@ -80,7 +80,9 @@
 	$mincost = intval($_GET['mincost']);
 	
 	$maxcost = intval($_GET['maxcost']);
-	
+		if($mincost > $maxcost){
+	die  ("No result found");
+	}
 	if(!empty($mincost) && !empty($maxcost) && $mincost < $maxcost){
 		$query .= " AND inventory.cost BETWEEN '$mincost' AND '$maxcost'";
 	
@@ -109,13 +111,13 @@ define("USER_HOME_DIR", "/home/stud/s3240514");
 require(USER_HOME_DIR . "/Smarty-3.1.11/libs/Smarty.class.php");
 
 
-$smarty = new Smarty();
 
+$smarty = new Smarty();
 $smarty->template_dir = USER_HOME_DIR . "/Smarty-Work-Dir/templates";
 $smarty->compile_dir = USER_HOME_DIR . "/Smarty-Work-Dir/templates_c";
 $smarty->cache_dir = USER_HOME_DIR . "/Smarty-Work-Dir/cache";
 $smarty->config_dir = USER_HOME_DIR . " /Smarty-Work-Dir/configs";
-
+/*
 $smarty->assign('result', 'Result Page');
 $smarty->assign('Name', 'Name');
 $smarty->assign('Variety', 'Variety');
@@ -131,7 +133,7 @@ $smarty->assign('Revenue', 'Revenue');
 
 
 
-while($result = mysql_fetch_assoc($resultcheck)){
+while($result = mysql_fetch_assoc($check_result)){
 $namearray[] = $result["wine_name"];
 $variety[] = $result["variety"];
 $year[] = $result["year"];
@@ -140,7 +142,7 @@ $region[] = $result["region_name"];
 $cost[] = $result["cost"];
 $onhand[] = $result["on_hand"];
 $price[] = $result["price"];
-$quantity[] = $result["quantity"];
+$quantity[] = $result["qty"];
 $revenue[] = $result["revenue"];
 
 }
@@ -158,11 +160,96 @@ $smarty->assign('result_price', $price);
 $smarty->assign('result_quantity', $quantity);
 $smarty->assign('result_revenue', $revenue);
 }
-$smarty->display('partc.tpl');
+$smarty->display('resultc.tpl');
 }
-	
+*/
+
+
+/*
+$smarty->assign('result', 'Result Page');
+$smarty->assign('Name', 'Name');
+$smarty->assign('Variety', 'Variety');
+$smarty->assign('Year', 'Year');
+$smarty->assign('Winery', 'Winery');
+$smarty->assign('Region', 'Region');
+$smarty->assign('Cost', 'Cost');
+$smarty->assign('Stock', 'Stock');
+$smarty->assign('Price', 'Price');
+$smarty->assign('Quantity', 'Quantity');
+$smarty->assign('Revenue', 'Revenue');
+
+while($result = mysql_fetch_assoc($resultcheck)){
+$namearray[] = $result["wine_name"];
+$variety[] = $result["variety"];
+$year[] = $result["year"];
+$winery[] = $result["winery_name"];
+$region[] = $result["region"];
+$cost[] = $result["cost"];
+$onhand[] = $result["on_hand"];
+$price[] = $result["price"];
+$quantity[] = $result["qty"];
+$revenue[] = $result["revenue"];
+
+}
+for($i=0; $i<mysql_num_rows($resultcheck); $i++){
+$smarty->assign('result_name',$namearray);
+$smarty->assign('result_variety', $variety);
+$smarty->assign('result_year', $year);
+$smarty->assign('result_winery', $winery);
+$smarty->assign('result_region', $region);
+$smarty->assign('result_cost', $cost);
+$smarty->assign('result_stock', $onhand);
+$smarty->assign('result_price', $price);
+$smarty->assign('result_qty', $qty);
+$smarty->assign('result_revenue', $revenue);
+}
+$smarty->display('resultc.tpl');
+}
+*/	
+$smarty->assign('result', 'Result Page');
+$smarty->assign('Name', 'Name');
+$smarty->assign('Variety', 'Variety');
+$smarty->assign('Year', 'Year');
+$smarty->assign('Winery', 'Winery');
+$smarty->assign('Region', 'Region');
+$smarty->assign('Cost', 'Cost');
+$smarty->assign('Stock', 'Stock');
+$smarty->assign('Price', 'Price');
+$smarty->assign('Quantity', 'Quantity');
+$smarty->assign('Revenue', 'Revenue');
+
+
+
+
+while($result = mysql_fetch_assoc($check_result)){
+$namearray[] = $result["wine_name"];
+$variety[] = $result["variety"];
+$year[] = $result["year"];
+$winery[] = $result["winery_name"];
+$region[] = $result["region_name"];
+$cost[] = $result["cost"];
+$onhand[] = $result["on_hand"];
+$price[] = $result["price"];
+$qty[] = $result["qty"];
+$rev[] = $result["rev"];
+
+}
+for($i=0; $i<mysql_num_rows($check_result); $i++){
+$smarty->assign('result_name',$namearray);
+$smarty->assign('result_variety', $variety);
+$smarty->assign('result_year', $year);
+$smarty->assign('result_winery', $winery);
+$smarty->assign('result_region', $region);
+$smarty->assign('result_cost', $cost);
+$smarty->assign('result_stock', $onhand);
+$smarty->assign('result_price', $price);
+$smarty->assign('result_qty', $qty);
+$smarty->assign('result_revenue', $rev);
+}
+$smarty->display('resultc.tpl');
+}
+echo"</body>";
+echo"</html>";
 ?>
 
 	
-</body>
-</html>
