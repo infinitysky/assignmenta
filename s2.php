@@ -8,7 +8,7 @@
 </head>
 
 <body>
-<form action = "resultpb.php" method = "GET">
+<form action = "resultpc.php" method = "GET">
 
 
 <?php
@@ -108,26 +108,44 @@ while ($option = mysql_fetch_row($result_grape)){
 
 
 
-
-
-<li>Please Select years
-<select name = 'year' id  = 'year'>
+<li>Please Select start years
+<select name = 'yearst' id  = 'yearst'>
 <?php
 $query_year = "select distinct year from wine order by year asc;";
 $result_year = mysql_query($query_year, $dbcon);
 
-for($k = 0; k < mysql_fetch_row($result_year); $k++){
-$year[$k] = mysql_result($result_year,$k);
-}
-for($k = 0; $k <count($year); $k+=5){
-$count = $k + 4;
-echo "<option value = '$year[$k]~$year[$count]'>$year[$k]~$year[$count]</option>";
+while ($year = mysql_fetch_row($result_year)){
+	for($k = 0; $k < mysql_num_fields($result_year); $k++){
+		echo "<option value = '$year[$k]'>$year[$k]</option>";
+	}
 }
 
-
-
-$query_min_stock = "";
 ?>
+
+
+</li>
+</select>
+<br />
+<br />
+<li>Please Select End years
+<select name = 'yeared' id  = 'yeared'>
+
+<?php
+
+$query_year = "select distinct year from wine order by year asc;";
+$result_year = mysql_query($query_year, $dbcon);
+
+while ($year = mysql_fetch_row($result_year)){
+	for($k1 = 0; $k1 < mysql_num_fields($result_year); $k1++){
+		echo "<option value = '$year[$k1]'>$year[$k1]</option>";
+	}
+}
+
+
+
+?>
+
+
 </li>
 </select>
 <br />
@@ -177,53 +195,3 @@ $query_min_stock = "";
 </form>
 </body>
 </html>
-
-<?php
-else{
-define("USER_HOME_DIR", "/home/stud/s3240514");
-require(USER_HOME_DIR . "/php/Smarty-2.6.26/Smarty.class.php");
-
-$smarty->template_dir = USER_HOME_DIR . "/php/Smarty-Work-Dir/templates";
-$smarty->compile_dir = USER_HOME_DIR . "/php/Smarty-Work-Dir/templates_c";
-$smarty->cache_dir = USER_HOME_DIR . "/php/Smarty-Work-Dir/cache";
-$smarty->config_dir = USER_HOME_DIR . "/php/Smarty-Work-Dir/configs";
-$smarty = new Smarty();
-$smarty->assign('result', 'Result Page');
-$smarty->assign('Name', 'Name');
-$smarty->assign('Variety', 'Variety');
-$smarty->assign('Year', 'Year');
-$smarty->assign('Winery', 'Winery');
-$smarty->assign('Region', 'Region');
-$smarty->assign('Cost', 'Cost');
-$smarty->assign('Stock', 'Stock');
-$smarty->assign('Price', 'Price');
-$smarty->assign('Quantity', 'Quantity');
-$smarty->assign('Revenue', 'Revenue');
-while($result = mysql_fetch_assoc($check_result)){
-$namearray[] = $result["wine_name"];
-$variety[] = $result["variety"];
-$year[] = $result["year"];
-$winery[] = $result["winery_name"];
-$region[] = $result["region_name"];
-$cost[] = $result["cost"];
-$onhand[] = $result["on_hand"];
-$price[] = $result["price"];
-$qty[] = $result["qty"];
-$rev[] = $result["rev"];
-
-}
-for($i=0; $i<mysql_num_rows($check_result); $i++){
-$smarty->assign('result_name',$namearray);
-$smarty->assign('result_variety', $variety);
-$smarty->assign('result_year', $year);
-$smarty->assign('result_winery', $winery);
-$smarty->assign('result_region', $region);
-$smarty->assign('result_cost', $cost);
-$smarty->assign('result_stock', $onhand);
-$smarty->assign('result_price', $price);
-$smarty->assign('result_qty', $qty);
-$smarty->assign('result_revenue', $rev);
-}
-$smarty->display('partc.tpl');
-}
-?>

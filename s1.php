@@ -110,23 +110,41 @@ while ($option = mysql_fetch_row($result_grape)){
 
 
 
-<li>Please Select years
-<select name = 'year' id  = 'year'>
+<li>Please Select start years
+<select name = 'yearst' id  = 'yearst'>
 <?php
 $query_year = "select distinct year from wine order by year asc;";
 $result_year = mysql_query($query_year, $dbcon);
 
-for($k = 0; k < mysql_fetch_row($result_year); $k++){
-$year[$k] = mysql_result($result_year,$k);
-}
-for($k = 0; $k <count($year); $k+=5){
-$count = $k + 4;
-echo "<option value = '$year[$k]~$year[$count]'>$year[$k]~$year[$count]</option>";
+while ($year = mysql_fetch_row($result_year)){
+	for($k = 0; $k < mysql_num_fields($result_year); $k++){
+		echo "<option value = '$year[$k]'>$year[$k]</option>";
+	}
 }
 
+?>
 
 
-$query_min_stock = "";
+</li>
+</select>
+<br />
+<br />
+<li>Please Select End years
+<select name = 'yeared' id  = 'yeared'>
+
+<?php
+
+$query_year = "select distinct year from wine order by year asc;";
+$result_year = mysql_query($query_year, $dbcon);
+
+while ($year = mysql_fetch_row($result_year)){
+	for($k1 = 0; $k1 < mysql_num_fields($result_year); $k1++){
+		echo "<option value = '$year[$k1]'>$year[$k1]</option>";
+	}
+}
+
+
+
 ?>
 </li>
 </select>
@@ -172,7 +190,9 @@ $query_min_stock = "";
 <br />
 <br />
 
-
+<?php
+mysql_close($dbcon);
+?>
 
 </form>
 </body>

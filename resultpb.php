@@ -54,16 +54,17 @@
 		$query .= " And variety = '$grape'";
 	}
 
-	$year = $_GET['year'];
 	
-	$years = explode("~", $year);
 	
-	$maxyear = intval($years[1]);
+	$maxyear = intval($_GET['yeared']);
 	
-	$minyear = intval($years[0]);
+	$minyear = intval($_GET['yearst']);
 	
 	if(!empty($minyear) && !empty($maxyear)&&$$minyear < $maxyear){
 		$query .= " And year between $minyear and $maxyear";
+	}
+	if($minyear>$maxyear){
+	die("The Max year must great then min year");
 	}
 
 	$minstock = intval($_GET['minstock']);
@@ -78,9 +79,15 @@
 		$query .= " AND items.qty >= $minorder";
 	}
 	
+	
+	
 	$mincost = intval($_GET['mincost']);
 	
 	$maxcost = intval($_GET['maxcost']);
+	if($mincost > $maxcost){
+	die  ("No result found");
+	}
+	
 	
 	if(!empty($mincost) && !empty($maxcost) && $mincost < $maxcost){
 		$query .= " AND inventory.cost BETWEEN '$mincost' AND '$maxcost'";
@@ -93,7 +100,7 @@
 
 
 
-
+$query .= " group by wine.wine_id";
 $query .= " order by wine.wine_name";
 $resultcheck= mysql_query($query, $dbcon);
 $resultcheckpage = mysql_fetch_row($resultcheck);

@@ -51,18 +51,17 @@ $pdo = new PDO("mysql:host=".DB_HOST.";port=".DB_PORT.";dbname=".DB_NAME,DB_USER
 		$query .= " And variety = '$grape'";
 	}
 
-	$year = $_GET['year'];
+		$maxyear = intval($_GET['yeared']);
 	
-	$years = explode("~", $year);
-	
-	$maxyear = intval($years[1]);
-	
-	$minyear = intval($years[0]);
+	$minyear = intval($_GET['yearst']);
 	
 	if(!empty($minyear) && !empty($maxyear)&&$$minyear < $maxyear){
 		$query .= " And year between $minyear and $maxyear";
 	}
-
+	if($minyear>$maxyear){
+	die("The Max year must great then min year");
+	}
+	
 	$minstock = intval($_GET['minstock']);
 	
 	if($minstock != 0){

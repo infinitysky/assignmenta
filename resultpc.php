@@ -17,7 +17,7 @@
 	mysql_select_db('winestore', $dbcon);
 	}
 	
-	$query = "Select wine.wine_name, grape_variety.variety, wine.year, winery.winery_name, region.region_name, inventory.cost, inventory.on_hand, items.price, items.qty, items.qty*items.price-inventory.cost*items.qty
+	$query = "Select wine.wine_name, grape_variety.variety, wine.year, winery.winery_name, region.region_name, inventory.cost, inventory.on_hand, items.price, items.qty, items.qty*items.price-inventory.cost*items.qty as revenue 
           From wine, grape_variety, winery, region, inventory, items, wine_variety
 		  Where wine.winery_id = winery.winery_id
 		    And winery.region_id = region.region_id
@@ -54,16 +54,15 @@
 		$query .= " And variety = '$grape'";
 	}
 
-	$year = $_GET['year'];
+		$maxyear = intval($_GET['yeared']);
 	
-	$years = explode("~", $year);
-	
-	$maxyear = intval($years[1]);
-	
-	$minyear = intval($years[0]);
+	$minyear = intval($_GET['yearst']);
 	
 	if(!empty($minyear) && !empty($maxyear)&&$$minyear < $maxyear){
 		$query .= " And year between $minyear and $maxyear";
+	}
+	if($minyear>$maxyear){
+	die("The Max year must great then min year");
 	}
 
 	$minstock = intval($_GET['minstock']);
@@ -98,8 +97,7 @@ $query .= " order by wine.wine_name";
 $resultcheck= mysql_query($query, $dbcon);
 $resultcheckpage = mysql_fetch_row($resultcheck);
 //if(empty($resultcheckpage[0]) || !is_numeric($_GET['minstock']) || !is_numeric($_GET['minorder']) || !is_numeric($_GET['mincost'])|| !is_numeric($_GET['maxcost'])){
-i
-f(empty($resultcheckpage[0]) || !is_numeric($_GET['minstock']) || !is_numeric($_GET['minorder']) || !is_numeric($_GET['mincost'])|| !is_numeric($_GET['maxcost'])){
+if(empty($resultcheckpage[0]) || !is_numeric($_GET['minstock']) || !is_numeric($_GET['minorder']) || !is_numeric($_GET['mincost'])|| !is_numeric($_GET['maxcost'])){
 echo "No result found";
 
 }
@@ -108,15 +106,15 @@ else{
 
 
 define("USER_HOME_DIR", "/home/stud/s3240514");
-require(USER_HOME_DIR . "/php/Smarty-2.6.26/Smarty.class.php");
+require(USER_HOME_DIR . "/Smarty-3.1.11/libs/Smarty.class.php");
 
 
 $smarty = new Smarty();
 
-$smarty->template_dir = USER_HOME_DIR . "/php/Smarty-Work-Dir/templates";
-$smarty->compile_dir = USER_HOME_DIR . "/php/Smarty-Work-Dir/templates_c";
-$smarty->cache_dir = USER_HOME_DIR . "/php/Smarty-Work-Dir/cache";
-$smarty->config_dir = USER_HOME_DIR . "/php/Smarty-Work-Dir/configs";
+$smarty->template_dir = USER_HOME_DIR . "/Smarty-Work-Dir/templates";
+$smarty->compile_dir = USER_HOME_DIR . "/Smarty-Work-Dir/templates_c";
+$smarty->cache_dir = USER_HOME_DIR . "/Smarty-Work-Dir/cache";
+$smarty->config_dir = USER_HOME_DIR . " /Smarty-Work-Dir/configs";
 
 $smarty->assign('result', 'Result Page');
 $smarty->assign('Name', 'Name');
@@ -134,13 +132,13 @@ $smarty->assign('Revenue', 'Revenue');
 
 
 while($result = mysql_fetch_assoc($resultcheck)){
-$namearray[] = $result["winename"];
+$namearray[] = $result["wine_name"];
 $variety[] = $result["variety"];
 $year[] = $result["year"];
-$winery[] = $result["wineryname"];
-$region[] = $result["regionname"];
+$winery[] = $result["winery_name"];
+$region[] = $result["region_name"];
 $cost[] = $result["cost"];
-$instock[] = $result["instock"];
+$onhand[] = $result["on_hand"];
 $price[] = $result["price"];
 $quantity[] = $result["quantity"];
 $revenue[] = $result["revenue"];
@@ -162,41 +160,6 @@ $smarty->assign('result_revenue', $revenue);
 }
 $smarty->display('partc.tpl');
 }
-
-
-	
-	
-	function display($dbcon, $query){
-		$result_page = mysql_query($query, $dbcon);
-		$rowfound = mysql_num_rows($result_page);
-		echo $rowfound." results found";
-		echo "<table width='80%'>";
-		echo "<tr><th align='left'>Name</th>
-      			<th align='left'>Variety</th>
-	  			<th align='left'>Year</th>
-	  			<th align='left'>Winery</th>
-	  			<th align='left'>Region</th>
-	  			<th align='left'>Cost</th>
-	  			<th align='left'>Stock</th>
-	  			<th align='left'>Price</th>
-	  			<th align='left'>Quantity</th>
-	  			<th align='left'>Revenue</th></tr>";
-		while($result = mysql_fetch_row($result_page)){
-				echo "<tr><td width='10%'>$result[0]</td>
-	      				<td width='10%'>$result[1]</td>
-		  				<td width='10%'>$result[2]</td>
-		  				<td width='20%'>$result[3]</td>
-		  				<td width='15%'>$result[4]</td>
-		  				<td width='10%'>$result[5]</td>
-		  				<td width='10%'>$result[6]</td>
-		  				<td width='10%'>$result[7]</td>
-		  				<td width='10%'>$result[8]</td>
-		  				<td>$result[9]</td></tr>";
-			}
-	
-	
-	}
-	
 	
 ?>
 
